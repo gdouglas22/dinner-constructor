@@ -24,7 +24,7 @@ public class Main {
                     generateDishCombo();
                     break;
                 case "3":
-                    System.out.println(Messages.MENU_OPTION_EXIT);
+                    System.out.println(Messages.EXIT_MESSAGE);
                     return;
                 default:
                     System.out.println(Messages.ERROR_INVALID_MENU_OPTION);
@@ -58,7 +58,7 @@ public class Main {
 
         // для проверки использовал код из статьи:
         // https://stackoverflow.com/questions/12558206/how-can-i-check-if-a-value-is-of-type-integer
-        if (!input.matches("\\d+")) {
+        if (!input.matches("-?\\d+")) {
             System.out.println(Messages.ERROR_INVALID_INT);
             return;
         }

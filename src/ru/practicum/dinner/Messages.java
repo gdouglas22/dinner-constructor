@@ -17,6 +17,7 @@ public class Messages {
             "строки (enter). Для завершения ввода введите пустую строку";
     public static final String COMBO_RESULT = "Комбо %d\n%s";
     public static final String COMBO_TYPE_NOT_FOUND = "[нет доступных блюд для типа: %s]";
+    public static final String EXIT_MESSAGE = "Выход из приложения... ";
 
     // Ошибки
     public static final String ERROR_INVALID_INT = "Ошибка: введите целое число";
