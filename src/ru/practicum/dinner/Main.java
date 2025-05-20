@@ -1,5 +1,6 @@
 package ru.practicum.dinner;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -13,7 +14,7 @@ public class Main {
 
         while (true) {
             printMenu();
-            String command = scanner.nextLine();
+            String command = scanner.nextLine().trim();
 
             switch (command) {
                 case "1":
@@ -23,43 +24,70 @@ public class Main {
                     generateDishCombo();
                     break;
                 case "3":
+                    System.out.println(Messages.MENU_OPTION_EXIT);
                     return;
+                default:
+                    System.out.println(Messages.ERROR_INVALID_MENU_OPTION);
             }
         }
     }
 
     private static void printMenu() {
-        System.out.println("Выберите команду:");
-        System.out.println("1 - Добавить новое блюдо");
-        System.out.println("2 - Сгенерировать комбинации блюд");
-        System.out.println("3 - Выход");
+        System.out.println(Messages.MENU_COMMAND_PROMPT);
+        System.out.println(Messages.MENU_OPTION_ADD_DISH);
+        System.out.println(Messages.MENU_OPTION_GENERATE);
+        System.out.println(Messages.MENU_OPTION_EXIT);
     }
 
     private static void addNewDish() {
-        System.out.println("Введите тип блюда:");
-        String dishType = scanner.nextLine();
-        System.out.println("Введите название блюда:");
-        String dishName = scanner.nextLine();
+        System.out.println(Messages.PROMPT_ENTER_DISH_TYPE);
+        String dishType = scanner.nextLine().trim();
 
-        // добавьте новое блюдо
+        System.out.println(Messages.PROMPT_ENTER_DISH_NAME);
+        String dishName = scanner.nextLine().trim();
+
+        dc.addNewDish(dishType, dishName);
+        System.out.printf((Messages.INFO_DISH_ADDED) + "%n", dishType, dishName);
     }
 
     private static void generateDishCombo() {
-        System.out.println("Начинаем конструировать обед...");
+        System.out.println(Messages.INFO_COMBO_START);
+        System.out.println(Messages.PROMPT_ENTER_COMBO_COUNT);
 
-        System.out.println("Введите количество наборов, которые нужно сгенерировать:");
-        int numberOfCombos = scanner.nextInt();
-        scanner.nextLine();
+        String input = scanner.nextLine().trim();
 
-        System.out.println("Вводите типы блюда, разделяя символом переноса строки (enter). Для завершения ввода введите пустую строку");
-        String nextItem = scanner.nextLine();
-
-        //реализуйте ввод типов блюд
-        while (!nextItem.isEmpty()) {
-
+        // для проверки использовал код из статьи:
+        // https://stackoverflow.com/questions/12558206/how-can-i-check-if-a-value-is-of-type-integer
+        if (!input.matches("\\d+")) {
+            System.out.println(Messages.ERROR_INVALID_INT);
+            return;
         }
 
-        // сгенерируйте комбинации блюд и выведите на экран
+        int numberOfCombos = Integer.parseInt(input);
+        if (numberOfCombos <= 0) {
+            System.out.println(Messages.ERROR_COMBO_COUNT_ZERO);
+            return;
+        }
 
+        System.out.println(Messages.PROMPT_ENTER_DISH_TYPES);
+
+        ArrayList<String> dinnerTypes = new ArrayList<>();
+        while (true) {
+            String nextItem = scanner.nextLine().trim();
+            if (nextItem.isEmpty()) {
+                break;
+            }
+            if (!dinnerTypes.contains(nextItem)) {
+                dinnerTypes.add(nextItem);
+            }
+        }
+
+        for (int i = 1; i <= numberOfCombos; i++) {
+            ArrayList<String> combo = dc.generateDishCombo(dinnerTypes);
+
+            // про printf брал отсюда
+            // https://www.w3schools.com/java/ref_output_printf.asp
+            System.out.printf((Messages.COMBO_RESULT) + "%n", i, combo);
+        }
     }
 }
