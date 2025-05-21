@@ -5,11 +5,12 @@ import java.util.Scanner;
 
 public class Main {
 
-    static DinnerConstructor dc;
-    static Scanner scanner;
+    // добавлены модификаторы доступа + переименован экземпляр класса DinnerConstructor dc -> dinnerConstructor
+    private static DinnerConstructor dinnerConstructor;
+    private static Scanner scanner;
 
     public static void main(String[] args) {
-        dc = new DinnerConstructor();
+        dinnerConstructor = new DinnerConstructor();
         scanner = new Scanner(System.in);
 
         while (true) {
@@ -46,7 +47,7 @@ public class Main {
         System.out.println(Messages.PROMPT_ENTER_DISH_NAME);
         String dishName = scanner.nextLine().trim();
 
-        dc.addNewDish(dishType, dishName);
+        dinnerConstructor.addNewDish(dishType, dishName);
         System.out.printf((Messages.INFO_DISH_ADDED) + "%n", dishType, dishName);
     }
 
@@ -83,7 +84,7 @@ public class Main {
         }
 
         for (int i = 1; i <= numberOfCombos; i++) {
-            ArrayList<String> combo = dc.generateDishCombo(dinnerTypes);
+            ArrayList<String> combo = dinnerConstructor.generateDishCombo(dinnerTypes);
 
             // про printf брал отсюда
             // https://www.w3schools.com/java/ref_output_printf.asp
